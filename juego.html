@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego del Basta o Stop</title>
+
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(90deg, #f5eb97, #d0ebb5, #abead3);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+
+        /* Ruleta exterior */
+        .ruleta {
+            width: 420px;
+            height: 420px;
+            border-radius: 50%;
+            background: #2456d4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Ruleta donde irán las letras */
+        .ruleta2 {
+            position: relative;
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            background: #d62828;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: visible;
+        }
+
+        /* Centro */
+        .ruleta3 {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: #ececec;
+            z-index: 5;
+        }
+
+        .letra-btn {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 50%;
+            background: #103b32;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.25s;
+
+
+            transform: translate(-50%, -50%);
+            transition: .25s;
+        }
+
+        .letra-btn:hover {
+            transform: translate(-50%, -50%) scale(1.12);
+        }
+
+        .deshabilitada {
+            opacity: .35;
+            pointer-events: none;
+        }
+
+        .boton-reiniciar {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 18px auto 0;
+            padding: 12px 20px;
+            border-radius: 999px;
+            background: #0f5739;
+            color: #fff;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 8px 18px rgba(15, 87, 57, 0.14);
+        }
+
+        .boton-reiniciar:hover {
+            background: #0d4a31;
+        }
+
+        .second-panel {
+            background: rgba(255, 255, 255, .15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, .25);
+
+        }
+
+        .contenedor-ruleta {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+
+            .footer {
+            background-color: #000000;
+            width: 100%;
+            height: auto;
+            padding: 10px;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="second-panel">
+            <input id="categoria">
+
+            <button onclick="agregarCategoria()">
+                Agregar
+            </button>
+
+            <select id="historial"></select>
+        </div>
+
+
+
+        <div class="ruleta">
+
+            <div id="ruleta2" class="ruleta2">
+
+                <div class="ruleta3"></div>
+
+            </div>
+
+        </div>
+
+        <button id="reiniciarBtn" class="boton-reiniciar">Reiniciar Juego</button>
+
+    </div>
+
+        <footer class="footer">
+        <p class="p">© 2026 Gestionador de Mensajes. Todos los derechos reservados. La Doble U.</p>
+    </footer>
+
+
+    <script>
+ const historialCategorias = [];
+
+function agregarCategoria() {
+    const input = document.getElementById("categoria");
+    const categoria = input.value.trim();
+
+    if (categoria === "") return;
+
+    // Evita categorías repetidas
+    if (!historialCategorias.includes(categoria)) {
+        historialCategorias.push(categoria);
+        actualizarHistorial();
+    }
+
+    input.value = "";
+}
+
+function actualizarHistorial() {
+    const select = document.getElementById("historial");
+
+    select.innerHTML = "";
+
+    historialCategorias.forEach(categoria => {
+        const opcion = document.createElement("option");
+        opcion.textContent = categoria;
+        select.appendChild(opcion);
+    });
+}
+        const ruleta = document.getElementById("ruleta2");
+
+        const letras = [
+            "A", "B", "C", "D", "E", "F", "G",
+            "H", "I", "J", "L", "M", "N", "Ñ",
+            "O", "P", "Q", "R", "S", "T", "U",
+            "V", "Z"
+        ];
+
+        const radio = 150;
+        const centro = 175;
+
+        letras.forEach((letra, i) => {
+
+            const boton = document.createElement("button");
+
+            boton.className = "letra-btn";
+            boton.textContent = letra;
+
+            const angulo = (2 * Math.PI * i) / letras.length - Math.PI / 2;
+
+            const x = centro + radio * Math.cos(angulo);
+            const y = centro + radio * Math.sin(angulo);
+
+            boton.style.left = `${x}px`;
+            boton.style.top = `${y}px`;
+
+            boton.addEventListener("click", () => {
+                boton.classList.add("deshabilitada");
+            });
+
+            ruleta.appendChild(boton);
+
+        });
+
+        function reiniciarLetras() {
+            document.querySelectorAll(".letra-btn").forEach(btn => {
+                btn.classList.remove("deshabilitada");
+            });
+        }
+
+        // Actualizar h3 con la categoría ingresada
+        const categoriaInput = document.getElementById('categoria');
+        const categoriaDisplay = document.getElementById('categoriaDisplay');
+
+        if (categoriaInput && categoriaDisplay) {
+            categoriaInput.addEventListener('input', () => {
+                categoriaDisplay.textContent = categoriaInput.value.trim();
+            });
+        }
+
+        // Conectar botón de reinicio
+        const reiniciarBtn = document.getElementById('reiniciarBtn');
+        if (reiniciarBtn) {
+            reiniciarBtn.addEventListener('click', () => {
+                reiniciarLetras();
+            });
+        }
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,20 @@
+{
+  "name": "Stop Virtual",
+  "short_name": "Basta Virtual",
+  "description": "Juego virtual del Basta o Stop.",
+  "start_url": "./Juego.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0f5739",
+  "theme_color": "#0f5739",
+  "icons": [
+    {
+      "src": "LogoUncos.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+
+  ]
+}

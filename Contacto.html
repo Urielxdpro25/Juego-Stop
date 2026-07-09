@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="LogoUncos.png">
+    <title>Contacto</title>
+
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(90deg, #f5eb97, #d0ebb5, #abead3);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 20px;
+        }
+
+        h1 {
+            color: rgb(0, 0, 0);
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+        }
+
+        .p {
+            color: rgb(255, 255, 255);
+            font-size: 1.2rem;
+        }
+
+        .descripcion {
+            color: rgb(0, 0, 0);
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: auto;
+            background: rgba(255, 255, 255, .15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, .25);
+        }
+
+        .contacto {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(236, 104, 104, 0.2);
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 12px;
+            transition: .3s;
+        }
+
+        .contacto:hover {
+            transform: translateY(-3px);
+            background: rgba(255,255,255,.3);
+        }
+
+        .contacto i {
+            font-size: 28px;
+            color: white;
+            width: 40px;
+            text-align: center;
+        }
+
+        .contacto h3 {
+            color: rgb(0, 0, 0);
+            margin-bottom: 5px;
+        }
+
+        .contacto a,
+        .contacto p {
+            color: rgb(0, 0, 0);
+            text-decoration: none;
+            word-break: break-word;
+        }
+
+        .contacto a:hover {
+            text-decoration: underline;
+        }
+
+        .boton {
+            display: block;
+            width: fit-content;
+            margin: 25px auto 0;
+            background: #0f5739;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: .3s;
+        }
+
+        .boton:hover {
+            background: #08452d;
+        }
+
+     .footer {
+            background-color: #000000;
+            width: 100%;
+            height: auto;
+            padding: 10px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        @media(max-width:600px){
+
+            h1{
+                font-size:2rem;
+            }
+
+            .container{
+                padding:20px;
+            }
+
+            .contacto{
+                flex-direction:column;
+                text-align:center;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <div>
+
+        <h1>📬 Contáctame</h1>
+
+        <p class="descripcion">
+            Si deseas comunicarte conmigo, puedes hacerlo por cualquiera de estos medios.
+        </p>
+
+        <div class="container">
+
+            <!-- Correo -->
+            <div class="contacto">
+                <i class="fas fa-envelope"></i>
+
+                <div>
+                    <h3>Correo electrónico</h3>
+                    <a href="mailto:urieluncos@gmail.com">
+                        urieluncos@gmail.com
+                    </a>
+                </div>
+            </div>
+
+            <!-- Teléfono -->
+            <div class="contacto">
+                <i class="fas fa-phone"></i>
+
+                <div>
+                    <h3>Teléfono</h3>
+                    <a href="tel:299 5064120">
+                        +54 9 299 506-4120
+                    </a>
+                </div>
+            </div>
+
+            <!-- GitHub -->
+            <div class="contacto">
+                <i class="fab fa-github"></i>
+
+                <div>
+                    <h3>GitHub</h3>
+                    <a href="https://github.com/Urielxdpro25" target="_blank">
+                        github.com/Urielxdpro25
+                    </a>
+                </div>
+            </div>
+
+            <!-- Instagram -->
+            <div class="contacto">
+                <i class="fab fa-instagram"></i>
+
+                <div>
+                    <h3>Instagram</h3>
+                    <a href="https://instagram.com/urieluncos" target="_blank">
+                        @urieluncos
+                    </a>
+                </div>
+            </div>
+
+            <a class="boton" href="Index.html">
+                Volver al Inicio
+            </a>
+
+        </div>
+
+    </div>
+
+    <footer class="footer">
+        <p class="p">© 2026 Gestionador de Mensajes. Todos los derechos reservados. La Doble U.</p>
+    </footer>
+
+</body>
+
+</html>
