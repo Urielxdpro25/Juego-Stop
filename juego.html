@@ -10,9 +10,6 @@
         body {
             margin: 0;
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             background: linear-gradient(90deg, #f5eb97, #d0ebb5, #abead3);
             font-family: Arial, Helvetica, sans-serif;
         }
@@ -122,6 +119,10 @@
             align-items: center;
         }
 
+        .p{
+            color: #fff;
+            font-size: 14px;
+        }
 
             .footer {
             background-color: #000000;
@@ -130,6 +131,7 @@
             padding: 10px;
             text-align: center;
             margin-top: 20px;
+            bottom: 0;
         }
     </style>
 </head>
@@ -139,9 +141,9 @@
     <div class="container">
 
         <div class="second-panel">
-            <input id="categoria">
+            <input id="categoria" type="text" placeholder="Ingrese una categoría" />
 
-            <button onclick="agregarCategoria()">
+            <button class="boton-reiniciar" onclick="agregarCategoria()">
                 Agregar
             </button>
 
