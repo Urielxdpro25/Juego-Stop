@@ -3,7 +3,7 @@
 // Versión del caché
 // ==========================================
 
-const CACHE = "gestionador-v2";
+const CACHE = "gestionador-v3";
 
 // Archivos que se guardarán para usar sin Internet
 const ARCHIVOS = [

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -19,9 +19,18 @@
             flex-direction: column;
             align-items: center;
             gap: 30px;
+            padding: 24px 16px 40px;
         }
 
-        /* Ruleta exterior */
+        .panel-principal {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 24px;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
         .ruleta {
             width: 420px;
             height: 420px;
@@ -32,7 +41,6 @@
             align-items: center;
         }
 
-        /* Ruleta donde irán las letras */
         .ruleta2 {
             position: relative;
             width: 350px;
@@ -45,13 +53,38 @@
             overflow: visible;
         }
 
-        /* Centro */
         .ruleta3 {
             width: 150px;
             height: 150px;
             border-radius: 50%;
             background: #ececec;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
             z-index: 5;
+        }
+
+        #temporizador {
+            font-size: 42px;
+            font-weight: bold;
+            color: #0f372f;
+        }
+
+        #btnIniciar {
+            padding: 8px 18px;
+            border: none;
+            border-radius: 20px;
+            background: #0f372f;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        #btnIniciar:hover {
+            transform: scale(1.08);
         }
 
         .letra-btn {
@@ -69,9 +102,6 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: transform 0.25s;
-
-
             transform: translate(-50%, -50%);
             transition: .25s;
         }
@@ -108,9 +138,24 @@
             background: rgba(255, 255, 255, .15);
             backdrop-filter: blur(10px);
             border-radius: 20px;
-            padding: 30px;
+            padding: 20px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, .25);
+            max-width: 220px;
+            width: 100%;
+        }
 
+        .second-panel input,
+        .second-panel select {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 8px 10px;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 0, 0, .15);
+            margin-bottom: 10px;
+        }
+
+        .second-panel select {
+            min-height: 120px;
         }
 
         .contenedor-ruleta {
@@ -119,12 +164,12 @@
             align-items: center;
         }
 
-        .p{
+        .p {
             color: #fff;
             font-size: 14px;
         }
 
-            .footer {
+        .footer {
             background-color: #000000;
             width: 100%;
             height: auto;
@@ -137,130 +182,160 @@
 </head>
 
 <body>
-
     <div class="container">
-
-        <div class="second-panel">
-            <input id="categoria" type="text" placeholder="Ingrese una categoría" />
-
-            <button class="boton-reiniciar" onclick="agregarCategoria()">
-                Agregar
-            </button>
-
-            <select id="historial"></select>
-        </div>
-
-
-
-        <div class="ruleta">
-
-            <div id="ruleta2" class="ruleta2">
-
-                <div class="ruleta3"></div>
-
+        <div class="panel-principal">
+            <div class="second-panel">
+                <input id="categoria" type="text" placeholder="Ingrese una categoría" />
+                <button class="boton-reiniciar" onclick="agregarCategoria()">Agregar</button>
+                <select id="historial" size="6"></select>
             </div>
 
+            <div class="ruleta">
+                <div id="ruleta2" class="ruleta2">
+                    <div class="ruleta3">
+                        <span id="temporizador">30</span>
+                        <button id="btnIniciar">Iniciar</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <button id="reiniciarBtn" class="boton-reiniciar">Reiniciar Juego</button>
-
     </div>
 
-        <footer class="footer">
+    <footer class="footer">
         <p class="p">© 2026 Gestionador de Mensajes. Todos los derechos reservados. La Doble U.</p>
     </footer>
 
-
     <script>
- const historialCategorias = [];
-
-function agregarCategoria() {
-    const input = document.getElementById("categoria");
-    const categoria = input.value.trim();
-
-    if (categoria === "") return;
-
-    // Evita categorías repetidas
-    if (!historialCategorias.includes(categoria)) {
-        historialCategorias.push(categoria);
-        actualizarHistorial();
-    }
-
-    input.value = "";
-}
-
-function actualizarHistorial() {
-    const select = document.getElementById("historial");
-
-    select.innerHTML = "";
-
-    historialCategorias.forEach(categoria => {
-        const opcion = document.createElement("option");
-        opcion.textContent = categoria;
-        select.appendChild(opcion);
-    });
-}
+        const historialCategorias = [];
         const ruleta = document.getElementById("ruleta2");
-
         const letras = [
             "A", "B", "C", "D", "E", "F", "G",
             "H", "I", "J", "L", "M", "N", "Ñ",
             "O", "P", "Q", "R", "S", "T", "U",
             "V", "Z"
         ];
-
         const radio = 150;
         const centro = 175;
+        const tiempoInicial = 30;
 
-        letras.forEach((letra, i) => {
+        let tiempo = tiempoInicial;
+        let jugando = false;
+        let temporizador = null;
 
-            const boton = document.createElement("button");
+        const reloj = document.getElementById("temporizador");
+        const btnIniciar = document.getElementById("btnIniciar");
+        const reiniciarBtn = document.getElementById("reiniciarBtn");
+        const categoriaInput = document.getElementById("categoria");
 
-            boton.className = "letra-btn";
-            boton.textContent = letra;
+        reloj.textContent = tiempo;
 
-            const angulo = (2 * Math.PI * i) / letras.length - Math.PI / 2;
+        function agregarCategoria() {
+            const input = document.getElementById("categoria");
+            const categoria = input.value.trim();
 
-            const x = centro + radio * Math.cos(angulo);
-            const y = centro + radio * Math.sin(angulo);
+            if (categoria === "") return;
 
-            boton.style.left = `${x}px`;
-            boton.style.top = `${y}px`;
+            if (!historialCategorias.includes(categoria)) {
+                historialCategorias.push(categoria);
+                actualizarHistorial();
+            }
 
-            boton.addEventListener("click", () => {
-                boton.classList.add("deshabilitada");
+            input.value = "";
+        }
+
+        function actualizarHistorial() {
+            const select = document.getElementById("historial");
+            select.innerHTML = "";
+
+            historialCategorias.forEach((categoria) => {
+                const opcion = document.createElement("option");
+                opcion.textContent = categoria;
+                select.appendChild(opcion);
             });
+        }
 
-            ruleta.appendChild(boton);
+        function crearRuleta() {
+            letras.forEach((letra, i) => {
+                const boton = document.createElement("button");
+                boton.className = "letra-btn";
+                boton.textContent = letra;
 
-        });
+                const angulo = (2 * Math.PI * i) / letras.length - Math.PI / 2;
+                const x = centro + radio * Math.cos(angulo);
+                const y = centro + radio * Math.sin(angulo);
+
+                boton.style.left = `${x}px`;
+                boton.style.top = `${y}px`;
+
+                boton.addEventListener("click", () => {
+                    if (!jugando) return;
+
+                    boton.classList.add("deshabilitada");
+                    iniciarTemporizador();
+                });
+
+                ruleta.appendChild(boton);
+            });
+        }
 
         function reiniciarLetras() {
-            document.querySelectorAll(".letra-btn").forEach(btn => {
+            document.querySelectorAll(".letra-btn").forEach((btn) => {
                 btn.classList.remove("deshabilitada");
             });
         }
 
-        // Actualizar h3 con la categoría ingresada
-        const categoriaInput = document.getElementById('categoria');
-        const categoriaDisplay = document.getElementById('categoriaDisplay');
+        function iniciarTemporizador() {
+            clearInterval(temporizador);
+            tiempo = tiempoInicial;
+            reloj.textContent = tiempo;
 
-        if (categoriaInput && categoriaDisplay) {
-            categoriaInput.addEventListener('input', () => {
-                categoriaDisplay.textContent = categoriaInput.value.trim();
+            temporizador = setInterval(() => {
+                tiempo--;
+                reloj.textContent = tiempo;
+
+                if (tiempo <= 0) {
+                    clearInterval(temporizador);
+                    jugando = false;
+                    btnIniciar.disabled = false;
+                    btnIniciar.textContent = "Iniciar";
+                    alert("¡Tiempo terminado!");
+                }
+            }, 1000);
+        }
+
+        function iniciarJuego() {
+            jugando = true;
+            btnIniciar.disabled = true;
+            btnIniciar.textContent = "Jugando";
+            iniciarTemporizador();
+        }
+
+        function reiniciarJuego() {
+            clearInterval(temporizador);
+            reiniciarLetras();
+            tiempo = tiempoInicial;
+            jugando = false;
+            reloj.textContent = tiempo;
+            btnIniciar.disabled = false;
+            btnIniciar.textContent = "Iniciar";
+        }
+
+        btnIniciar.addEventListener("click", iniciarJuego);
+        reiniciarBtn.addEventListener("click", reiniciarJuego);
+
+        if (categoriaInput) {
+            categoriaInput.addEventListener("keydown", (event) => {
+                if (event.key === "Enter") {
+                    event.preventDefault();
+                    agregarCategoria();
+                }
             });
         }
 
-        // Conectar botón de reinicio
-        const reiniciarBtn = document.getElementById('reiniciarBtn');
-        if (reiniciarBtn) {
-            reiniciarBtn.addEventListener('click', () => {
-                reiniciarLetras();
-            });
-        }
-
+        crearRuleta();
     </script>
-
 </body>
 
 </html>
