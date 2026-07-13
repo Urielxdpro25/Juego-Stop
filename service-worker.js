@@ -11,7 +11,7 @@ const ARCHIVOS = [
     "./Index.html",
     "./manifest.json",
     "./LogoUriel.png",
-    "./Contactos.html",
+    "./Contacto.html",
     "./Juego.html",
 ];
 
