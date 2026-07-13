@@ -4,6 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="LogoUncos.png">
+
     <title>Juego del basta o Stop</title>
 </head>
 
@@ -11,6 +14,8 @@
 
     <style>
         body {
+            left: 0;
+            right: 0;
             margin: 0;
             min-height: 100vh;
             display: flex;
@@ -20,7 +25,7 @@
             color: #2f3e46;
         }
 
-        .main {
+         .main {
             flex: 1;
             width: min(100%, 900px);
             margin: 0 auto;
@@ -28,7 +33,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-        }
+        } 
 
         h1 {
             text-align: center;
