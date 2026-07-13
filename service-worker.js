@@ -3,14 +3,14 @@
 // Versión del caché
 // ==========================================
 
-const CACHE = "gestionador-v4";
+const CACHE = "gestionador-v6";
 
 // Archivos que se guardarán para usar sin Internet
 const ARCHIVOS = [
     "./",
-    "./index.html",
+    "./Index.html",
     "./manifest.json",
-    "./LogoUncos.png",
+    "./LogoUriel.png",
     "./Contactos.html",
     "./Juego.html",
 ];
