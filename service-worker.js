@@ -3,12 +3,11 @@
 // Versión del caché
 // ==========================================
 
-const CACHE = "gestionador-v8";
+const CACHE = "gestionador-v9";
 
 // Archivos que se guardarán para usar sin Internet
 const ARCHIVOS = [
-    "./",
-    "./index.html",
+    "./Index.html",
     "./manifest.json",
     "./LogoUriel.png",
     "./Contacto.html",
